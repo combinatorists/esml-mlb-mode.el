@@ -44,6 +44,7 @@ by the user."
 
 (defvar esml-du-live-dufs nil)
 
+;;;###autoload
 (defun esml-du-mlton (&optional duf dont-save)
   "Gets def-use information from a def-use file produced by MLton."
   (interactive)
@@ -66,12 +67,12 @@ by the user."
               (esml-du-load ctx)
               (esml-du-set-live-dufs (cons duf esml-du-live-dufs) dont-save)
               (def-use-add-dus
-                (function esml-du-title)
-                (function esml-du-sym-at-ref)
-                (function esml-du-sym-to-uses)
-                (function esml-du-finalize)
-                (function esml-du-ctx-attr)
-                ctx))))))
+               (function esml-du-title)
+               (function esml-du-sym-at-ref)
+               (function esml-du-sym-to-uses)
+               (function esml-du-finalize)
+               (function esml-du-ctx-attr)
+               ctx))))))
      duf dont-save))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

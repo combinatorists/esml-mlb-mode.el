@@ -78,6 +78,7 @@ two characters of a pattern are deleted at the end."
                (string :tag "4. pattern (`%i' = index, `%f' = field)"))
   :group 'esml-gen)
 
+;;;###autoload
 (defun esml-gen-fru-setter (pattern-or-type)
   "Generates a functional record update function. The parameter must be in
 the format `[{]id[: ty][,] ...[,] id[}]' where `[]' marks optional parts."
@@ -89,9 +90,9 @@ the format `[{]id[: ty][,] ...[,] id[}]' where `[]' marks optional parts."
       (let ((fields (sort fields 'string-lessp))
             (start (point)))
         (cl-labels ((format-fields
-                     (fmt)
-                     (with-temp-buffer
-                       (loop
+                      (fmt)
+                      (with-temp-buffer
+                        (loop
                          for f in fields
                          for i from 1 to n
                          do (insert
@@ -101,8 +102,8 @@ the format `[{]id[: ty][,] ...[,] id[}]' where `[]' marks optional parts."
                                     (result (replace-regexp-in-string
                                              "\\%i" (int-to-string i) result t t)))
                                result)))
-                       (delete-char -2) ;; TBD
-                       (buffer-string))))
+                        (delete-char -2) ;; TBD
+                        (buffer-string))))
           (insert
            (let* ((result (nth 0 esml-gen-fru-setter-template))
                   (result (replace-regexp-in-string
@@ -140,6 +141,7 @@ two characters of a pattern are deleted at the end."
                (string :tag "5. pattern (`%i' = index)"))
   :group 'esml-gen)
 
+;;;###autoload
 (defun esml-gen-ftu-setters (n)
   "Generates functional tuple update, or `set<N>', functions."
   (interactive "nMaximum number of fields [2-100]: ")
@@ -147,35 +149,35 @@ two characters of a pattern are deleted at the end."
                 (<= n 100)))
       (error "%s" "Number of fields must be between 2 and 100")
     (cl-labels ((format-fields
-                 (fmt n)
-                 (with-temp-buffer
-                   (loop for i from 1 to n
-                     do (insert
-                         (let* ((result fmt)
-                                (result (replace-regexp-in-string
-                                         "%i" (int-to-string i) result t t)))
-                           result)))
-                   (delete-char -2) ;; TBD
-                   (buffer-string))))
+                  (fmt n)
+                  (with-temp-buffer
+                    (loop for i from 1 to n
+                          do (insert
+                              (let* ((result fmt)
+                                     (result (replace-regexp-in-string
+                                              "%i" (int-to-string i) result t t)))
+                                result)))
+                    (delete-char -2) ;; TBD
+                    (buffer-string))))
       (let ((start (point)))
         (loop for i from 2 to n do
-          (unless (= i 2)
-            (insert "\n"))
-          (insert
-           (let* ((result (nth 0 esml-gen-ftu-setters-template))
-                  (result (replace-regexp-in-string
-                           "%1" (format-fields (nth 1 esml-gen-ftu-setters-template) i) result t t))
-                  (result (replace-regexp-in-string
-                           "%2" (format-fields (nth 2 esml-gen-ftu-setters-template) i) result t t))
-                  (result (replace-regexp-in-string
-                           "%3" (format-fields (nth 3 esml-gen-ftu-setters-template) i) result t t))
-                  (result (replace-regexp-in-string
-                           "%4" (format-fields (nth 4 esml-gen-ftu-setters-template) i) result t t))
-                  (result (replace-regexp-in-string
-                           "%5" (format-fields (nth 5 esml-gen-ftu-setters-template) i) result t t))
-                  (result (replace-regexp-in-string
-                           "%n" (int-to-string i) result t t)))
-             result)))
+              (unless (= i 2)
+                (insert "\n"))
+              (insert
+               (let* ((result (nth 0 esml-gen-ftu-setters-template))
+                      (result (replace-regexp-in-string
+                               "%1" (format-fields (nth 1 esml-gen-ftu-setters-template) i) result t t))
+                      (result (replace-regexp-in-string
+                               "%2" (format-fields (nth 2 esml-gen-ftu-setters-template) i) result t t))
+                      (result (replace-regexp-in-string
+                               "%3" (format-fields (nth 3 esml-gen-ftu-setters-template) i) result t t))
+                      (result (replace-regexp-in-string
+                               "%4" (format-fields (nth 4 esml-gen-ftu-setters-template) i) result t t))
+                      (result (replace-regexp-in-string
+                               "%5" (format-fields (nth 5 esml-gen-ftu-setters-template) i) result t t))
+                      (result (replace-regexp-in-string
+                               "%n" (int-to-string i) result t t)))
+                 result)))
         (indent-region start (point) nil)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

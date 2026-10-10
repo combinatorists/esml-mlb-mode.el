@@ -404,6 +404,7 @@ by a space.")
           (t
            '(0 . min)))))
 
+;;;###autoload
 (defun esml-mlb-indent-line ()
   "Indent current line as ML Basis code."
   (interactive)
@@ -479,6 +480,7 @@ name completions."
                                (string-match
                                 valid-suffices-regexp ext)))))))))))
 
+;;;###autoload
 (defun esml-mlb-complete ()
   "Performs context sensitive completion at point."
   (interactive)
@@ -619,6 +621,7 @@ name completions."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Commands
 
+;;;###autoload
 (defun esml-mlb-indent-line-or-complete ()
   "Indents the current line. If indentation does not change, attempts to
 perform context sensitive completion. This command is not idempotent."
@@ -628,6 +631,7 @@ perform context sensitive completion. This command is not idempotent."
     (when (= old-indentation (current-indentation))
       (esml-mlb-complete))))
 
+;;;###autoload
 (defun esml-mlb-find-file-at-point ()
   "Grabs the path surrounding point and attempts to find the file."
   (interactive)
@@ -651,6 +655,7 @@ perform context sensitive completion. This command is not idempotent."
 
 (defconst esml-mlb-show-basis-process-name "*mlb-show-basis*")
 
+;;;###autoload
 (defun esml-mlb-show-basis ()
   "Shows the basis defined by the MLB file in the current buffer."
   (interactive)
@@ -718,6 +723,7 @@ perform context sensitive completion. This command is not idempotent."
 (defvar esml-mlb-mode-hook nil
   "Hook run when entering ML Basis mode.")
 
+;;;###autoload
 (define-derived-mode esml-mlb-mode fundamental-mode "MLB"
   "Major mode for editing ML Basis files. Provides syntax highlighting,
 indentation, and context sensitive completion.
@@ -734,6 +740,7 @@ See the customization group `esml-mlb'."
 
 (setq esml-mlb-load-time nil)
 
+;;;###autoload
 (defun esml-mlb-update ()
   "Updates data based on customization variables."
   (interactive)
